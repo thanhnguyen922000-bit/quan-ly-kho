@@ -1,0 +1,33 @@
+type Product @table {
+  name: String!
+  description: String
+}
+
+type Customer @table {
+  name: String!
+  phone: String
+  notes: String
+}
+
+type InventoryReceipt @table {
+  product: Product!
+  quantity: Int!
+  purchasePrice: Float!
+  sellingPrice: Float!
+  paymentMethod: String! # Assuming "BANK_TRANSFER" or "CASH" will be stored as strings
+  createdAt: Timestamp!
+}
+
+type Order @table {
+  customer: Customer!
+  paymentMethod: String! # Assuming "BANK_TRANSFER" or "CASH" will be stored as strings
+  createdAt: Timestamp!
+  totalAmount: Float
+}
+
+type OrderItem @table(key: ["order", "product"]) {
+  order: Order!
+  product: Product!
+  quantity: Int!
+  unitPrice: Float!
+}
